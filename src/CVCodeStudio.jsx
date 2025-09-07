@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { emptyCV, LS_KEY } from "./constants/sampleData.js";
 import { toMarkdown } from "./utils/markdown.js";
 import { download } from "./utils/download.js";
@@ -109,14 +109,12 @@ export default function CVCodeStudio() {
               data={data} 
               previewRef={previewRef} 
               onHeightChange={setPreviewHeight}
-              isLightMode={isLightMode}
             />
           </div>
           <Dashboard 
             data={data} 
             setData={setData} 
             previewHeight={previewHeight}
-            isLightMode={isLightMode}
           />
         </div>
       </div>

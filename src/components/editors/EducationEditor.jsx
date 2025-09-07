@@ -31,14 +31,14 @@ export default function EducationEditor({ education, setEducation }) {
         <button
           onClick={add}
           type="button"
-          className="inline-flex items-center gap-2 rounded-xl bg-emerald-600/90 hover:bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow"
+          className="btn-primary"
         >
-          + Añadir estudio
+          ➕ Añadir estudio
         </button>
       </div>
       {safeEducation.map((ed, i) => (
-        <div key={i} className="rounded-2xl border border-slate-700 bg-slate-900/60 p-4 mb-4">
-          <div className="grid grid-cols-2 gap-3">
+        <div key={i} className="added-item-education">
+          <div className="grid grid-cols-2 gap-4">
             <Input
               label="Nivel"
               value={ed.level || ""}
@@ -63,13 +63,13 @@ export default function EducationEditor({ education, setEducation }) {
               onChange={(v) => update(i, "institution", v)}
             />
           </div>
-          <div className="flex justify-end mt-3">
+          <div className="flex justify-end mt-4">
             <button
               type="button"
               onClick={() => remove(i)}
-              className="inline-flex items-center gap-2 text-sm text-rose-300 hover:text-rose-200"
+              className="btn-danger px-3 py-2 text-xs"
             >
-              Eliminar
+              🗑️ Eliminar
             </button>
           </div>
         </div>

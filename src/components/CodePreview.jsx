@@ -12,24 +12,26 @@ const SectionTitle = ({ children }) => (
 );
 
 function Enum({ title, items }) {
+  const safeItems = Array.isArray(items) ? items : [];
   return (
     <div className="mt-3">
       <Line>enum <K>{title}</K></Line>
-      <Line indent>{items.length ? items.join(", ") : "// add items"}</Line>
+      <Line indent>{safeItems.length ? safeItems.join(", ") : "// add items"}</Line>
     </div>
   );
 }
 
 function Block({ title, items }) {
+  const safeItems = Array.isArray(items) ? items : [];
   return (
     <div className="mt-3">
       <Line><K>{title}</K></Line>
-      <Line indent>{items.length ? items.join(", ") : "// add items"}</Line>
+      <Line indent>{safeItems.length ? safeItems.join(", ") : "// add items"}</Line>
     </div>
   );
 }
 
-export default function CodePreview({ data, previewRef, onHeightChange, isLightMode }) {
+export default function CodePreview({ data, previewRef, onHeightChange }) {
   const contentRef = useRef(null);
   const [lineCount, setLineCount] = useState(1);
 
@@ -72,7 +74,7 @@ export default function CodePreview({ data, previewRef, onHeightChange, isLightM
     });
     ro.observe(el);
     return () => ro.disconnect();
-  }, [onHeightChange]);
+  }, [onHeightChange, previewRef]);
 
   return (
     <div
@@ -127,7 +129,7 @@ export default function CodePreview({ data, previewRef, onHeightChange, isLightM
                 </div>
               )}
               <div className="flex-1">
-                {data.summary.filter(Boolean).map((s, i) => (
+                {Array.isArray(data.summary) && data.summary.filter(Boolean).map((s, i) => (
                   <div key={i} className="code-comment leading-6">/// {s}</div>
                 ))}
               </div>
@@ -164,7 +166,7 @@ export default function CodePreview({ data, previewRef, onHeightChange, isLightM
               {/* Columna derecha */}
               <div className="space-y-2">
                 <SectionTitle>public static class <K>EDUCATION</K></SectionTitle>
-                {data.education.map((ed, i) => (
+                {Array.isArray(data.education) && data.education.map((ed, i) => (
                   <div key={i} className="ml-6 mb-2">
                     <Line>private void <V>University{i + 1}</V>()</Line>
                     <Line indent>var <V>Level</V> = <S>"{ed.level}"</S>;</Line>
@@ -175,19 +177,19 @@ export default function CodePreview({ data, previewRef, onHeightChange, isLightM
                 ))}
 
                 <SectionTitle>public static <K>EXPERIENCE</K></SectionTitle>
-                {data.experiences.map((ex, i) => (
+                {Array.isArray(data.experiences) && data.experiences.map((ex, i) => (
                   <div key={i} className="ml-6 mb-2">
                     <Line>public void <V>{(ex.company || `Company${i + 1}`).replace(/\s+/g, "")}</V>()</Line>
                     <Line indent>var <V>Duration</V> = Range(<S>"{ex.start}"</S>, <S>"{ex.end || "Present"}"</S>);</Line>
                     <Line indent>var <V>Role</V> = <S>"{ex.role}"</S>;</Line>
                     <Line indent>var <V>Type</V> = <S>"{ex.type}"</S>;</Line>
-                    {ex.bullets.filter(Boolean).map((b, bi) => (
+                    {Array.isArray(ex.bullets) && ex.bullets.filter(Boolean).map((b, bi) => (
                       <Line key={bi} indent>// {b}</Line>
                     ))}
                   </div>
                 ))}
 
-                {data.projects.length > 0 && (
+                {Array.isArray(data.projects) && data.projects.length > 0 && (
                   <>
                     <SectionTitle>public static <K>PROJECTS</K></SectionTitle>
                     {data.projects.map((p, i) => (

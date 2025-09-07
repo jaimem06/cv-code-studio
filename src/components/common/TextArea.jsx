@@ -1,7 +1,7 @@
 export default function TextArea({ label, value, onChange, rows = 4, placeholder = "" }) {
   return (
-    <div className="mb-3">
-      <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
+    <div className="mb-4">
+      <label className="block text-sm font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
         {label}
       </label>
       <textarea
@@ -9,7 +9,7 @@ export default function TextArea({ label, value, onChange, rows = 4, placeholder
         onChange={(e) => onChange(e.target.value)}
         rows={rows}
         placeholder={placeholder}
-        className="input-base"
+        className="input-base resize-none"
       />
     </div>
   );

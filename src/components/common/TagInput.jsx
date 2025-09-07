@@ -5,11 +5,11 @@ export default function TagInput({ label, values, onAdd, onRemove, placeholder =
 
   return (
     <div className="mb-4">
-      <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
+      <label className="block text-sm font-semibold mb-3" style={{ color: "var(--text-primary)" }}>
         {label}
       </label>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3 mb-3">
         <input
           value={t}
           onChange={(e) => setT(e.target.value)}
@@ -21,7 +21,7 @@ export default function TagInput({ label, values, onAdd, onRemove, placeholder =
             }
           }}
           placeholder={placeholder}
-          className="input-base"
+          className="input-base flex-1"
         />
         <button
           type="button"
@@ -31,12 +31,12 @@ export default function TagInput({ label, values, onAdd, onRemove, placeholder =
               setT("");
             }
           }}
-          className="btn-primary text-sm px-3 py-2"
+          className="btn-primary text-sm px-4 py-3"
         >
-          + Añadir
+          ✨ Añadir
         </button>
       </div>
-      <div className="mt-2 flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2">
         {values.map((v, i) => (
           <span key={i} className="tag">
             {v}

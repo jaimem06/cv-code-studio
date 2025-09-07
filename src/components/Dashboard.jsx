@@ -5,7 +5,7 @@ import EducationEditor from "./editors/EducationEditor.jsx";
 import ExperienceEditor from "./editors/ExperienceEditor.jsx";
 import ProjectsEditor from "./editors/ProjectsEditor.jsx";
 
-export default function Dashboard({ data, setData, previewHeight, isLightMode }) {
+export default function Dashboard({ data, setData, previewHeight }) {
   return (
     <div
       className="dashboard-container dashboard-sticky transition-theme p-6"
