@@ -44,18 +44,18 @@ export default function ProjectsEditor({ projects, setProjects }) {
   return (
     <Collapsible title="Proyectos">
       <div className="flex items-center justify-end pb-3">
-        <button onClick={add} type="button" className="inline-flex items-center gap-2 rounded-xl bg-emerald-600/90 hover:bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow">+ Añadir proyecto</button>
+        <button onClick={add} type="button" className="btn-primary">🚀 Añadir proyecto</button>
       </div>
       {safeProjects.map((p, i) => (
-        <div key={i} className="rounded-2xl border border-slate-700 bg-slate-900/60 p-4 mb-4">
-          <div className="grid grid-cols-2 gap-3">
+        <div key={i} className="added-item-project">
+          <div className="grid grid-cols-2 gap-4">
             <Input label="Nombre" value={p.name || ""} onChange={(v) => update(i, "name", v)} />
             <Input label="Link" value={p.link || ""} onChange={(v) => update(i, "link", v)} placeholder="https://..." />
           </div>
           <TextArea label="Resumen" value={p.summary || ""} onChange={(v) => update(i, "summary", v)} rows={3} />
           <TagInput label="Stack" values={p.stack || []} onAdd={(t) => addTag(i, t)} onRemove={(ti) => remTag(i, ti)} />
-          <div className="flex justify-end mt-3">
-            <button type="button" onClick={() => remove(i)} className="inline-flex items-center gap-2 text-sm text-rose-300 hover:text-rose-200">Eliminar</button>
+          <div className="flex justify-end mt-4">
+            <button type="button" onClick={() => remove(i)} className="btn-danger px-3 py-2 text-xs">🗑️ Eliminar</button>
           </div>
         </div>
       ))}

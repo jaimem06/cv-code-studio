@@ -47,14 +47,14 @@ export default function ExperienceEditor({ experiences, setExperiences }) {
         <button
           onClick={add}
           type="button"
-          className="inline-flex items-center gap-2 rounded-xl bg-emerald-600/90 hover:bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow"
+          className="btn-primary"
         >
-          + Añadir experiencia
+          💼 Añadir experiencia
         </button>
       </div>
       {safeExperiences.map((ex, i) => (
-        <div key={i} className="rounded-2xl border border-slate-700 bg-slate-900/60 p-4 mb-4">
-          <div className="grid grid-cols-2 gap-3">
+        <div key={i} className="added-item-experience">
+          <div className="grid grid-cols-2 gap-4">
             <Input label="Empresa" value={ex.company || ""} onChange={(v) => update(i, "company", v)} />
             <Input label="Rol" value={ex.role || ""} onChange={(v) => update(i, "role", v)} />
             <Input label="Tipo" value={ex.type || ""} onChange={(v) => update(i, "type", v)} placeholder="Startup / Full-time / Freelance" />
@@ -69,13 +69,13 @@ export default function ExperienceEditor({ experiences, setExperiences }) {
             onAdd={(t) => addBullet(i, t)}
             onRemove={(k) => remBullet(i, k)}
           />
-          <div className="flex justify-end mt-3">
+          <div className="flex justify-end mt-4">
             <button
               type="button"
               onClick={() => remove(i)}
-              className="inline-flex items-center gap-2 text-sm text-rose-300 hover:text-rose-200"
+              className="btn-danger px-3 py-2 text-xs"
             >
-              Eliminar
+              🗑️ Eliminar
             </button>
           </div>
         </div>
