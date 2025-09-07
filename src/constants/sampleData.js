@@ -12,9 +12,9 @@ export const emptyCV = {
   ],
   info: {
     name: "David Mendonza",
-    title: "CEO | Software Engineer | Entrepreneur",
+    title: "Computer Engineering Student",
     email: "jaimedavidmendoza1506@gmail.com",
-    phone: "+212 6 00 60 00 00",
+    phone: "+593 98 088 5416",
     location: "Loja, Ecuador",
     vehicleLicense: true,
     age: "22",
@@ -31,7 +31,7 @@ export const emptyCV = {
   experiences: [
     {
       company: "JamesCodeLab",
-      role: "Founder & CEO",
+      role: "Computer Engineering Student",
       type: "Startup",
       start: "2021",
       end: "Present",

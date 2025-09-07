@@ -1,14 +1,11 @@
-// Imprime SOLO el preview en 1 página A4 con texto copiable y COLORES,
-// forzando 2 columnas en modo impresión y respetando el tema seleccionado.
 export async function printPreviewOnePage(
   previewEl,
   {
-    orientation = "portrait",      // "portrait" | "landscape"
-    pageBg = "#ffffff",            // Color de fondo
-    marginMM = 0,                  // 0 = full-bleed
-    showGutter = true,             // muestra/oculta la columna de líneas
-    showHeader = true,             // muestra/oculta la barra de título
-    isLightMode = true,            // Modo claro/oscuro
+    orientation = "portrait",
+    pageBg = "#ffffff",
+    marginMM = 0,
+    showGutter = true,
+    isLightMode = true,
   } = {}
 ) {
   if (!previewEl) return;
@@ -22,7 +19,6 @@ export async function printPreviewOnePage(
   const pageWmm = orientation === "landscape" ? 297 : 210;
   const pageHmm = orientation === "landscape" ? 210 : 297;
 
-  // Variables CSS según el modo seleccionado
   const themeVars = isLightMode ? {
     bgPrimary: '#ffffff',
     bgSecondary: '#f8fafc',
@@ -38,7 +34,8 @@ export async function printPreviewOnePage(
     textCodeVariable: '#7c3aed',
     textCodeString: '#d97706',
     borderPrimary: '#e2e8f0',
-    borderSecondary: '#cbd5e1'
+    borderSecondary: '#cbd5e1',
+    shadowXl: '0 20px 25px -5px rgb(0 0 0 / 0.1)'
   } : {
     bgPrimary: '#0f172a',
     bgSecondary: '#1e293b',
@@ -54,111 +51,100 @@ export async function printPreviewOnePage(
     textCodeVariable: '#c4b5fd',
     textCodeString: '#fde68a',
     borderPrimary: '#334155',
-    borderSecondary: '#475569'
+    borderSecondary: '#475569',
+    shadowXl: '0 20px 25px -5px rgb(0 0 0 / 0.3)'
   };
 
-  // Documento base de impresión con estilos globales integrados
   const html = `<!doctype html>
-<html>
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Print CV</title>
-<style>
+ <html>
+ <head>
+ <meta charset="utf-8"/>
+ <meta name="viewport" content="width=device-width,initial-scale=1"/>
+ <title>Print CV</title>
+ <style>
   @page { 
-    size: A4 ${orientation}; 
-    margin: ${marginMM}mm; 
+   size: A4 ${orientation}; 
+   margin: ${marginMM}mm; 
   }
   
-  /* ==================== VARIABLES CSS PARA IMPRESIÓN ==================== */
   :root {
-    --bg-primary: ${themeVars.bgPrimary};
-    --bg-secondary: ${themeVars.bgSecondary};
-    --bg-tertiary: ${themeVars.bgTertiary};
-    --bg-code: ${themeVars.bgCode};
-    --bg-code-header: ${themeVars.bgCodeHeader};
-    --bg-code-gutter: ${themeVars.bgCodeGutter};
-    
-    --text-primary: ${themeVars.textPrimary};
-    --text-secondary: ${themeVars.textSecondary};
-    --text-muted: ${themeVars.textMuted};
-    --text-code-keyword: ${themeVars.textCodeKeyword};
-    --text-code-type: ${themeVars.textCodeType};
-    --text-code-variable: ${themeVars.textCodeVariable};
-    --text-code-string: ${themeVars.textCodeString};
-    
-    --border-primary: ${themeVars.borderPrimary};
-    --border-secondary: ${themeVars.borderSecondary};
+   --bg-primary: ${themeVars.bgPrimary};
+   --bg-secondary: ${themeVars.bgSecondary};
+   --bg-tertiary: ${themeVars.bgTertiary};
+   --bg-code: ${themeVars.bgCode};
+   --bg-code-header: ${themeVars.bgCodeHeader};
+   --bg-code-gutter: ${themeVars.bgCodeGutter};
+   
+   --text-primary: ${themeVars.textPrimary};
+   --text-secondary: ${themeVars.textSecondary};
+   --text-muted: ${themeVars.textMuted};
+   --text-code-keyword: ${themeVars.textCodeKeyword};
+   --text-code-type: ${themeVars.textCodeType};
+   --text-code-variable: ${themeVars.textCodeVariable};
+   --text-code-string: ${themeVars.textCodeString};
+   
+   --border-primary: ${themeVars.borderPrimary};
+   --border-secondary: ${themeVars.borderSecondary};
   }
 
   html, body { 
-    height: 100%; 
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+   height: 100%; 
+   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
   
   body {
-    margin: 0 !important;
-    background: ${pageBg} !important;
-    color: var(--text-primary) !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
+   margin: 0 !important;
+   background: ${pageBg} !important;
+   color: var(--text-primary) !important;
+   -webkit-print-color-adjust: exact !important;
+   print-color-adjust: exact !important;
+   color-adjust: exact !important;
   }
   
   .page {
-    width: ${pageWmm}mm;
-    height: ${pageHmm}mm;
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-    background: ${pageBg};
-    display: grid;
-    place-items: start;
+   width: ${pageWmm}mm;
+   height: ${pageHmm}mm;
+   margin: 0 auto;
+   position: relative;
+   overflow: hidden;
+   background: ${pageBg};
+   display: grid;
+   place-items: start;
   }
   
   .scale-root { 
-    transform-origin: top left; 
-    will-change: transform; 
+   transform-origin: top left; 
+   will-change: transform; 
   }
 
-  /* ==================== ESTILOS DE CÓDIGO ==================== */
   .code-container {
-    background-color: var(--bg-code);
-    border-radius: 1rem;
-    overflow: hidden;
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-    border: 1px solid var(--border-secondary);
-    max-width: 100%;
-    height: fit-content;
+   background-color: var(--bg-code);
+   border-radius: 1rem;
+   overflow: hidden;
+   box-shadow: var(--shadow-xl) !important;
+   border: 1px solid var(--border-secondary);
+   max-width: 100%;
+   height: fit-content;
   }
-  
-  .code-header {
-    background-color: var(--bg-code-header);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--border-secondary);
-  }
-  
+
   .code-gutter {
-    background-color: var(--bg-code-gutter);
-    padding: 1.5rem 0.75rem;
-    font-size: 0.75rem;
-    user-select: none;
-    flex-shrink: 0;
-    color: var(--text-muted);
-    width: 3rem;
-    text-align: right;
+   background-color: var(--bg-code-gutter);
+   padding: 1.5rem 0.75rem;
+   font-size: 0.75rem;
+   user-select: none;
+   flex-shrink: 0;
+   color: var(--text-muted);
+   width: 3rem;
+   text-align: right;
   }
   
   .code-content {
-    padding: 1.5rem;
-    font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
-    font-size: 0.875rem;
-    color: var(--text-primary);
-    height: auto;
-    min-height: auto;
+   padding: 1.5rem;
+   font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
+   font-size: 0.875rem;
+   color: var(--text-primary);
+   height: auto;
+   min-height: auto;
   }
   
   .code-keyword { color: var(--text-code-keyword); }
@@ -167,7 +153,6 @@ export async function printPreviewOnePage(
   .code-string { color: var(--text-code-string); }
   .code-comment { color: var(--text-muted); }
 
-  /* ==================== LAYOUT ==================== */
   .leading-7 { line-height: 1.75rem; }
   .whitespace-pre-wrap { white-space: pre-wrap; }
   .ml-6 { margin-left: 1.5rem; }
@@ -190,46 +175,75 @@ export async function printPreviewOnePage(
   .rounded-lg { border-radius: 0.5rem; }
   .object-cover { object-fit: cover; }
 
-  /* ==================== FORZAR 2 COLUMNAS EN IMPRESIÓN ==================== */
   .two-col {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    column-gap: 3rem !important;
-    row-gap: 1.5rem !important;
+   display: grid !important;
+   grid-template-columns: 1fr 1fr !important;
+   column-gap: 3rem !important;
+   row-gap: 1.5rem !important;
+   margin: 0 auto !important;
+   justify-content: center !important;
   }
 
-  /* Mostrar/ocultar partes */
   ${showGutter ? "" : ".gutter { display: none !important; }"}
-  ${showHeader ? "" : ".print-hide-header { display: none !important; }"}
 
-  /* Asegurar colores/fondo en todos los nodos */
   * { 
-    -webkit-print-color-adjust: exact !important; 
-    print-color-adjust: exact !important; 
+   -webkit-print-color-adjust: exact !important; 
+   print-color-adjust: exact !important; 
+   color-adjust: exact !important;
   }
   
   @media print { 
-    html, body { overflow: hidden; }
-    .two-col {
-      display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
-      column-gap: 3rem !important;
-      row-gap: 1.5rem !important;
-    }
+   html, body { overflow: hidden; }
+   .two-col {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    column-gap: 2rem !important;
+    row-gap: 1rem !important;
+    text-align: justify !important;
+    justify-content: center !important;
+    max-width: 180mm !important;
+    margin: 0 auto !important;
+    justify-self: center !important;
+   }
+
+   .scale-root {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    height: 100% !important;
+   }
+
+   .code-content {
+    padding: 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+   }
+
+   .leading-6 { line-height: 1.5rem !important; }
+   .mt-4 { margin-top: 0.75rem !important; }
+   .mt-3 { margin-top: 0.5rem !important; }
+   .mb-4 { margin-bottom: 0.75rem !important; }
+   .mb-2 { margin-bottom: 0.25rem !important; }
+   .mb-1 { margin-bottom: 0.125rem !important; }
+   .space-y-2 > * + * { margin-top: 0.25rem !important; }
+   
+   .code-container {
+    box-shadow: var(--shadow-xl) !important;
+   }
   }
-</style>
-</head>
-<body>
+ </style>
+ </head>
+ <body>
   <div class="page"><div id="scaleRoot" class="scale-root"></div></div>
-</body>
-</html>`;
+ </body>
+ </html>`;
 
   win.document.open("text/html", "replace");
   win.document.write(html);
   win.document.close();
 
-  // En lugar de copiar estilos externos, ya tenemos todo integrado
-  // Solo esperamos que el documento esté listo
   await new Promise(resolve => {
     if (win.document.readyState === 'complete') {
       resolve();
@@ -238,24 +252,21 @@ export async function printPreviewOnePage(
     }
   });
 
-  // Clonar SOLO el preview
   const scaleRoot = win.document.getElementById("scaleRoot");
   const inner = previewEl.querySelector(".print-scale") || previewEl;
   const clone = win.document.importNode(inner, true);
   scaleRoot.appendChild(clone);
 
-  // Esperar fonts/imagenes/layout
   const waitFrame = () => new Promise(r => win.requestAnimationFrame(() => win.requestAnimationFrame(r)));
   const waitImgs = () => Promise.all(
     Array.from(win.document.images).map(img =>
       img.complete ? Promise.resolve() : new Promise(res => (img.onload = img.onerror = res))
     )
   );
-  
+
   await waitImgs();
   await waitFrame();
 
-  // Escalar para encajar TODO en 1 A4
   const page = win.document.querySelector(".page");
   const a4 = page.getBoundingClientRect();
   clone.style.transform = "none";

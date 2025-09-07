@@ -37,6 +37,21 @@
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
+
+  /* === NUEVAS VARIABLES DE ACENTO === */
+  /* Definimos solo los valores RGB puros */
+  --accent-edu-rgb: 59, 130, 246;
+  /* Azul (Blue-500) */
+  --accent-exp-rgb: 16, 185, 129;
+  /* Esmeralda (Emerald-500) */
+  --accent-proj-rgb: 139, 69, 219;
+  /* Tu Púrpura custom */
+  --accent-tag-rgb: 245, 158, 11;
+  /* Ámbar (Amber-500) */
+
+  /* Opacidad para Dark Mode */
+  --accent-bg-alpha: 0.08;
+  --accent-border-alpha: 0.2;
 }
 
 /* Modo claro */
@@ -63,6 +78,9 @@
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+
+  --accent-bg-alpha: 0.06;
+  --accent-border-alpha: 0.15;
 }
 
 /* ==================== RESET & BASE ==================== */
@@ -142,12 +160,75 @@ body {
     border-color: var(--border-secondary);
   }
 
+  /* === SECCIÓN DE ITEMS AÑADIDOS REFACTORIZADA === */
+
+  /* 1. Estilos base comunes para los items de Editor */
+  .added-item-education,
+  .added-item-experience,
+  .added-item-project {
+    @apply rounded-xl p-4 mb-3 transition-all duration-200;
+  }
+
+  /* 2. Estilo base común para los Tags */
+  .added-item-tag {
+    @apply rounded-lg px-3 py-1.5 transition-all duration-200;
+  }
+
+  /* 3. Asignación de colores (¡Funciona para Dark y Light Mode!) */
+  /* Usamos la sintaxis moderna rgb(var(...) / var(...)) */
+
+  .added-item-education {
+    background-color: rgb(var(--accent-edu-rgb) / var(--accent-bg-alpha)) !important;
+    border: 1px solid rgb(var(--accent-edu-rgb) / var(--accent-border-alpha)) !important;
+  }
+
+  .added-item-experience {
+    background-color: rgb(var(--accent-exp-rgb) / var(--accent-bg-alpha)) !important;
+    border: 1px solid rgb(var(--accent-exp-rgb) / var(--accent-border-alpha)) !important;
+  }
+
+  .added-item-project {
+    background-color: rgb(var(--accent-proj-rgb) / var(--accent-bg-alpha)) !important;
+    border: 1px solid rgb(var(--accent-proj-rgb) / var(--accent-border-alpha)) !important;
+  }
+
+  .added-item-tag {
+    background-color: rgb(var(--accent-tag-rgb) / var(--accent-bg-alpha)) !important;
+    border: 1px solid rgb(var(--accent-tag-rgb) / var(--accent-border-alpha)) !important;
+  }
+
+  /* Botones minimalistas para añadir elementos */
+  .btn-add-minimal {
+    @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 border-dashed;
+    background-color: transparent;
+    border-color: var(--border-secondary);
+    color: var(--text-secondary);
+  }
+
+  .btn-add-minimal:hover {
+    border-color: rgba(16, 185, 129, 0.5);
+    background-color: rgba(16, 185, 129, 0.05);
+    color: var(--text-primary);
+  }
+
+  .btn-collapse {
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200;
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-secondary);
+  }
+
+  .btn-collapse:hover {
+    background-color: var(--border-secondary);
+    color: var(--text-primary);
+    transform: scale(1.05);
+  }
+
   /* Code theme */
   .code-container {
     background-color: var(--bg-code);
     @apply rounded-2xl overflow-hidden shadow-xl;
     border: 1px solid var(--border-secondary);
-    /* Limitar el tamaño máximo del contenedor */
     max-width: 100%;
     height: fit-content;
   }
@@ -160,19 +241,18 @@ body {
 
   .code-gutter {
     background-color: var(--bg-code-gutter);
-    @apply px-3 py-6 text-xs select-none flex-shrink-0;
+    @apply px-3 py-4 text-xs select-none flex-shrink-0;
     color: var(--text-muted);
-    /* Hacer que el gutter se ajuste al contenido */
     width: auto;
     min-width: 3rem;
   }
 
   .code-content {
-    @apply p-6 font-mono text-sm;
+    @apply p-4 font-mono text-sm;
     color: var(--text-primary);
-    /* Asegurar height automático */
     height: auto;
     min-height: auto;
+    line-height: 1.5;
   }
 
   .code-keyword {
@@ -195,47 +275,13 @@ body {
     color: var(--text-muted);
   }
 
-  /* Collapsible */
-  .collapsible {
-    @apply card-base mb-5;
-  }
-
-  .collapsible-trigger {
-    @apply w-full flex items-center justify-between px-4 py-3 text-left font-semibold;
-    color: var(--text-secondary);
-  }
-
-  .collapsible-content {
-    @apply px-4 pb-4;
-  }
-
-  /* Tags */
-  .tag {
-    @apply inline-flex items-center gap-2 px-3 py-1 text-xs rounded-xl;
-    background-color: rgb(51 65 85 / 0.7);
-    color: var(--text-primary);
-    border: 1px solid var(--border-primary);
-  }
-
-  .tag-remove {
-    @apply hover:text-rose-300 cursor-pointer;
-  }
-
-  /* Dashboard */
-  .dashboard-container {
-    @apply card-base p-5;
-    background-color: rgb(15 23 42 / 0.5);
-  }
-
-  .dashboard-sticky {
-    @apply lg:sticky lg:top-6;
-  }
+  /* ... otros estilos ... */
 }
 
 /* ==================== MODO IMPRESIÓN ==================== */
 @page {
   size: A4;
-  margin: 0;
+  margin: 1
 }
 
 @media print {
@@ -269,24 +315,74 @@ body {
     overflow: hidden;
   }
 
-  /* Forzar dos columnas en impresión */
+    /* Mantener sombras del contenedor de código */
+  .code-container {
+    box-shadow: var(--shadow-xl) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  /* Centrar y justificar dos columnas en impresión */
   .two-col {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    column-gap: 3rem !important;
-    row-gap: 1.5rem !important;
+    column-gap: 2rem !important;
+    row-gap: 1rem !important;
+    text-align: justify !important;
+    justify-content: center !important;
+    max-width: 180mm !important;
+    margin: 0 auto !important;
   }
 
   /* Optimizar gutter para impresión */
   .code-gutter {
-    padding: 1.5rem 0.75rem !important;
+    padding: 1rem 0.75rem !important;
     width: 2.5rem !important;
+  }
+
+  /* Reducir padding del contenido en impresión */
+  .code-content {
+    padding: 1rem !important;
   }
 
   /* Asegurar que los colores se impriman */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+}
+
+/* ==================== UTILIDADES RESPONSIVAS ==================== */
+@layer utilities {
+  .container-app {
+    @apply max-w-7xl mx-auto px-4 py-6 lg:py-10;
+  }
+
+  .grid-dashboard {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-6 items-start;
+  }
+
+  .grid-form-cols {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-3;
+  }
+
+  .space-section {
+    @apply space-y-4;
+  }
+
+  .transition-theme {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  /* Centrado global del contenido */
+  .content-centered {
+    @apply flex flex-col items-center justify-center;
+  }
+
+  /* Justificación de texto */
+  .text-justify {
+    text-align: justify;
+    text-justify: inter-word;
   }
 }
 
@@ -406,7 +502,6 @@ body {
 .light-mode .tag {
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
-  border-color: var(--border-primary);
 }
 
 /* ==================== SCROLLBAR PERSONALIZADO ==================== */

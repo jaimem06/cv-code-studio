@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { emptyCV, LS_KEY } from "./constants/sampleData.js";
-import { exportSinglePagePDF } from "./utils/pdf.js";
 import { toMarkdown } from "./utils/markdown.js";
 import { download } from "./utils/download.js";
 import CodePreview from "./components/CodePreview.jsx";
@@ -50,10 +49,6 @@ export default function CVCodeStudio() {
       isLightMode: isLightMode,
     });
 
-  const exportPDF = useCallback(() => 
-    exportSinglePagePDF(previewRef.current, { fullBleed: true }), []
-  );
-
   const exportMD = () => download("cv.md", toMarkdown(data), "text/markdown;charset=utf-8");
   const loadDemo = () => setData(emptyCV);
   const resetAll = () => setData({ 
@@ -94,10 +89,6 @@ export default function CVCodeStudio() {
               Imprimir
             </button>
             
-            <button onClick={exportPDF} className="btn-primary">
-              Exportar PDF
-            </button>
-            
             <button onClick={exportMD} className="btn-secondary">
               Exportar Markdown
             </button>
@@ -105,7 +96,7 @@ export default function CVCodeStudio() {
             <button onClick={loadDemo} className="btn-primary">
               Cargar demo
             </button>
-            
+
             <button onClick={resetAll} className="btn-ghost">
               Reset
             </button>
@@ -131,7 +122,7 @@ export default function CVCodeStudio() {
       </div>
 
       <footer className="mt-8 text-center text-xs" style={{ color: "var(--text-muted)" }}>
-        Hecho con ❤ · Tu CV como código — todo se guarda en tu navegador.
+        Crear CV como codigo desde el navegador.
       </footer>
     </div>
   );
